@@ -3,21 +3,32 @@ import { FormularioCentros } from "./FormularioCentros";
 import { TareaLista } from "./TareaLista";
 import { TaskForm } from "./TaskForm";
 
+import { ListGrafo } from "./ListGrafo";
+
 import { tasks as data } from "./tasks";
+import { centros as dataCe } from "./data/centros";
+import {grafo as graphData} from "./data/grafo"
+import { GrafoTesteo } from "./GrafoTesteo";
+
 import { useState, useEffect } from "react";
-import {centros} from "./data/centros"
-import {Test} from "./Test"
+
+import { Test } from "./Test";
 
 export function App() {
   const [tasks, setTasks] = useState([]);
-  const [centro, setcentro] = useState("");
+  const [centro, setcentro] = useState([]);
+  const [graph, setGraph] = useState(""); 
 
   useEffect(() => {
-    setcentro(centro);
+    setcentro(dataCe);
   }, []);
 
   useEffect(() => {
     setTasks(data);
+  }, []);
+
+  useEffect(() => {
+    setGraph(graphData);
   }, []);
 
   function createTask(taskTitle) {
@@ -29,7 +40,7 @@ export function App() {
         description: "aa",
       },
     ]);
-    
+    console.log(centro);
   }
 
   function deleteTask(taskId) {
@@ -37,23 +48,26 @@ export function App() {
     setTasks(tasks.filter((task) => task.id !== taskId)); //Es como un if
   }
 
-  function recolectar(nombre, nodo, conexiones) {
-    console.log(nombre, nodo, conexiones)
-    //setcentro("ee")
-    setcentro(nombre+" "+nodo+" "+conexiones)
-    console.log(centro)
+  function take(nombre, nodo, conexiones) {
+    setcentro([
+      ...centro,
+      { id: centro.length, name: nombre, nodo: nodo, conexiones: conexiones },
+    ]);
+    console.log(graph);
   }
-
-  function showXD() {}
 
   return (
     <>
-      <FormularioCentros recolectar={recolectar}/>
       <TaskForm createTask={createTask} />
-      <TareaLista tasks={tasks} deleteTask={deleteTask} />
-      <br/>
 
-        <Test test={centro}/>
+      <TareaLista tasks={tasks} deleteTask={deleteTask} />
+      <br />
+
+      <Test test={take} />
+
+      <ListGrafo centros={centro} />
+      <GrafoTesteo grafo={graph} yy={"digraph G {"+graph+"}"}></GrafoTesteo> {/* No entiendo porque es que no funciona el graph pero escrito directo si */}
+      
     </>
   );
 }

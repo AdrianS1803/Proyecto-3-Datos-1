@@ -1,0 +1,1 @@
+export const grafo = "A -> B;B -> C;B -> F;F -> A"
