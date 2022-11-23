@@ -1,1 +1,1 @@
-export const grafo = "A -> B;B -> C;B -> F;F -> A"
+export const grafo = "A -> B [label=1];B -> C [label=5];B -> F [label=4];F -> A [label=8]"/* "A -> B;B -> C;B -> F;F -> A" */
