@@ -15,14 +15,14 @@ export function PackageCE(props) {
 
         if ((newProgress > maximo+11) && (newProgress <= maximo+12)) {
           //clearInterval(interval);
-          alert("Entrega acabada")
+          props.sumPendientes(1);
+          props.sumEntregados();
+          alert("Entrega acabada");
         }
-        console.log(newProgress, maximo)
         return newProgress;
       });
     }, 1000);
   });
-
   return (
     <div>
       <h1>{packageCE.title}</h1>

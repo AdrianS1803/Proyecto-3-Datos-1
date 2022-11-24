@@ -15,6 +15,8 @@ import { SelecionarRuta } from "./SelecionarRuta";
 import { useState, useEffect } from "react";
 import { rutas as rutasData } from "./data/rutas";
 
+import { DashBoard } from "./Dashboard";
+
 import {
   Button,
   ProgressBar,
@@ -33,6 +35,9 @@ export function App() {
   const [packageCEs, setPackageCEs] = useState([]);
   const [graph, setGraph] = useState("");
   const [rutas, setRutas] = useState([]);
+  const [entregados, setEntregados] = useState(0)
+  const [solicitados, setSolicitados] = useState(0)
+  const [pendientes, setPendientes] = useState(0)
 
   useEffect(() => {
     setRutas(rutasData);
@@ -85,6 +90,27 @@ export function App() {
 
   }
 
+  function sumEntregados(){
+    let entre = entregados + 1;
+    setEntregados(entre);
+  }
+
+  function sumSolicitados(){
+    let soli = solicitados + 1;
+    setSolicitados(soli);
+  }
+
+  function sumPendientes(value){
+    let pen = pendientes;
+    if (value == 0){
+      pen += 1;
+    }
+    else{
+      pen -= 1;
+    }
+    setPendientes(pen);
+  }
+
   return (
     <>
       <header>
@@ -101,9 +127,22 @@ export function App() {
           <Container>
             <Row className="px-4 my-5">
 
+              <Col>
+                {/* Este es el grafo, igual buscarlo en el archivo */}
+                  <GrafoTesteo grafo={"digraph G {" + graph + "}"}></GrafoTesteo>
+                </Col>
+                
+                <Col>
+                  <DashBoard solicitados={solicitados} pendientes={pendientes} entregados={entregados}/>
+                  <Row>
+                    <PackageCELista packageCEs={packageCEs} deletePackageCE={deletePackageCE} sumPendientes={sumPendientes} sumEntregados={sumEntregados} />
+                    <SelecionarRuta rutas={rutas} />
+                  </Row>
+                </Col>
+
               {/* Esto no se si ira o no al final */}
               <Col>
-                <Button>Solicitar un paquete</Button>
+
               </Col>
 
              
@@ -115,19 +154,13 @@ export function App() {
                 <FormularioNodos addNode={addNode} deleteNode={deleteNode} />
                 <hr></hr>
                 {/* Formulario de los paquetes */}
-                <PackageForm createPackage={createPackage} />
+                <PackageForm createPackage={createPackage} sumSolicitados={sumSolicitados} sumPendientes={sumPendientes}/>
               </Col>
 
-              <Col>
-              {/* Este es el grafo, igual buscarlo en el archivo */}
-                <GrafoTesteo grafo={"digraph G {" + graph + "}"}></GrafoTesteo>
-              </Col>
+              <hr>
 
-              <Col>
-               {/* Aqui va el lugar donde aparecne las listas */}
-                <PackageCELista packageCEs={packageCEs} deletePackageCE={deletePackageCE} />
-                <SelecionarRuta rutas={rutas} />
-              </Col>
+              </hr>
+
             </Row>
           </Container>
         </main>

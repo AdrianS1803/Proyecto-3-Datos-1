@@ -1,12 +1,12 @@
 export const packageCE = [
-    {
+    /* {
         id:0,
         title:'A12',
         description:'Enviado desde A a C',
         maxProgress:"10",
         salida:"",
         llegada:""
-    },
+    }, */
     /* {
         id:1,
         title:'mi seg tarea',

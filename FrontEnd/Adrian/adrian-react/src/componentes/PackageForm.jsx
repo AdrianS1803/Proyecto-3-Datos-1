@@ -10,7 +10,8 @@ export function PackageForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault(); //Previene el comportamiento por defecto, que se reinicie la pagina
-
+    props.sumSolicitados();
+    props.sumPendientes(0);
     props.createPackage(title, maxValue, salida, llegada);
   };
 

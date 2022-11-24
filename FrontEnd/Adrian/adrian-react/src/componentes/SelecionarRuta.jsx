@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Input } from "reactstrap";
 
 export function SelecionarRuta(props) {
-  console.log(props.rutas);
   return (
     <>
       <select>
@@ -11,8 +10,6 @@ export function SelecionarRuta(props) {
           <option key={ruta.id}>{ruta.name}</option>
         ))}
       </select>
-
-      <Input></Input>
     </>
   );
 }
